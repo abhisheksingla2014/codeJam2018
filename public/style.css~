@@ -552,7 +552,7 @@ a{
 .contact{
     display: flex;
     justify-content: flex-end;
-    position:relative;
+	position:relative;
 }
 
 .default {

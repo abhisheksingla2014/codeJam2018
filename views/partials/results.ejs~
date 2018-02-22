@@ -168,9 +168,10 @@ function convertToMonth(num){
                     </div>
                 </a>    
                     <div class = "contact">
-			<div class = "maps-addon">
+<div class = "maps-addon">
                             <a><i class="material-icons">add_location</i></a>
-                            <p class = "property-addon"><%= item.listing.propertyId %>,<% if(item.listing.property.bedrooms != 0){ %><%= item.listing.property.bedrooms %> BHK <%= item.listing.property.unitType %><% }else{ %>Residential <%= item.listing.property.unitType %><% }if(item.listing.property.project.builder.displayName){ %>in <%= item.listing.property.project.builder.displayName %> <%= item.listing.property.project.name %><% } %>,<%= item.listing.latitude %>,<%= item.listing.longitude %>,<%= item.listing.companySeller.company.id %>,<%= item.listing.companySeller.company.name %>,</p>
+                            <p class = "property-addon"><%= item.listing.propertyId %>,<% if(item.listing.property.bedrooms != 0){ %><%= item.listing.property.bedrooms %> BHK <%= item.listing.property.unitType %><% }else{ %>Residential <%= item.listing.property.unitType %><% }if(item.listing.property.project.builder.displayName){ %>in <%= item.listing.property.project.builder.displayName %> <%= item.listing.property.project.name %><% } %>,<%= item.listing.latitude %>,<%= item.listing.longitude %>,
+                            </p>
                         </div>
                         <button class = "default" onclick = "openModal(<%= item.listing.propertyId %>)">View Phone</button></a><button class = "default">Contact Seller</button>
                     </div>

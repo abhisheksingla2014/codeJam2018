@@ -7,7 +7,6 @@
     <link rel = "stylesheet" href = "style.css">
     <link href = "https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
     <link href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel = "stylesheet">
- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Makaan | Results</title>
 </head>
 <body>
@@ -37,7 +36,6 @@
     </div>
    
     <% include ../partials/functions %>
-  <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src = "script.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-pVsbgpmpDk_AafaZOpAAv-PtNvz6d1I&callback=myMap"></script> 

@@ -1,11 +1,4 @@
-var config = {
-    apiKey: "AIzaSyCC5idbKBo59mPZMxKBhrj_HTGlUqUjxxk",
-    authDomain: "blog-66ae8.firebaseapp.com",
-    databaseURL: "https://blog-66ae8.firebaseio.com",
-    projectId: "blog-66ae8",
-    storageBucket: "blog-66ae8.appspot.com",
-    messagingSenderId: "627249249118"
-  };
+
 var bookmarks = {};
     if(document.cookie){
         var value = ";" + document.cookie;
@@ -24,7 +17,6 @@ var bookmarks = {};
 document.cookie = "bookmarks="+ JSON.stringify(bookmarks) +"; expires=Sun, 9 Dec 2018 12:00:00 UTC;";
 function setcookie(bookmarks,initMap){
     document.cookie = "bookmarks="+ JSON.stringify(bookmarks) +"; expires=Sun, 9 Dec 2018 12:00:00 UTC;";
-  // console.log("cook",document.cookie);
     $.getScript("http://maps.google.com/maps/api/js?callback=initMap", function () {});
 }
 
@@ -36,10 +28,9 @@ function setcookie(bookmarks,initMap){
 function initMap() {
   var origin = [{lat:28.444250,lng:77.043240}];
   var destination = [];
-  console.log("bookmarks=",bookmarks);
+  console.log(bookmarks);
   for(let prop in bookmarks){
-    if(bookmarks[prop][bookmarks[prop].length -1] == "yes" || bookmarks[prop][bookmarks[prop].length -1] == "pending")
-      destination.push({lat:parseFloat(bookmarks[prop][1]),lng:parseFloat(bookmarks[prop][2])});
+    destination.push({lat:parseFloat(bookmarks[prop][1]),lng:parseFloat(bookmarks[prop][2])});
   }
   console.log("des =============",destination);
   var bounds = new google.maps.LatLngBounds;
@@ -148,50 +139,6 @@ function deleteMarkers(markersArray) {
   markersArray = [];
 }
 
-
-// firebase start //
-firebase.initializeApp(config);
-var database = firebase.database();
-function writeUserData(temp_arr,bookmarks,user_id = 1,meet_time = "10:32",user_location = {lat:1,lng:1},property_address= {lat:1,lng:1}) {
-if(typeof temp_arr == "string"){
-  firebase.database().ref('prop/' + temp_arr+ "/" + user_id).set(null);  
-}
-else{
-  firebase.database().ref('prop/' + temp_arr[0]+ "/" + user_id).set({
-    propId:temp_arr[0],
-    propName:temp_arr[1],
-    broker_id: temp_arr[4],
-    broker_name: temp_arr[5],
-    meet_time,
-    user_location,
-    property_address
-    });
-    firebase.database().ref('prop/' + temp_arr[0]+ "/" + user_id).on('value',function(snapshot) {
-      if(snapshot.val() == null){
-        console.log("off");
-      } 
-      else if(snapshot.val().status == "no"){
-        bookmarks[temp_arr[0]][bookmarks[temp_arr[0]].length-1] = "no";
-        // console.log(bookmarks);
-        setcookie(bookmarks,initMap);
-        console.log("no");
-      } 
-      else if(snapshot.val().status == "yes"){
-        bookmarks[temp_arr[0]][bookmarks[temp_arr[0]].length-1] = "yes";
-        // console.log(bookmarks);
-        setcookie(bookmarks,initMap);
-        console.log("yes");
-      }
-      else{
-        console.log("invalid results",snapshot.val());
-      }
-      console.log("koi chala?");
-    }); 
-  }
-}
-
-// firebase end //
-
 $(document).ready(function(){
     console.log("cookie",document.cookie);
     $('.maps-addon').click(function(){
@@ -200,28 +147,21 @@ $(document).ready(function(){
             console.log($(this).css("color"));
             console.log($(this).children('.property-addon').text());
             let temp_arr = $(this).children('.property-addon').text().split(",");
-            console.log("temp_arr=",temp_arr);
-            bookmarks[temp_arr[0]] = temp_arr.slice(1,6);
-            bookmarks[temp_arr[0]].push("pending");
+            bookmarks[temp_arr[0]] = temp_arr.slice(1,4);
             console.log(bookmarks);
             $(this).css("color", "#F62459");
-            console.log("key",'prop/' + temp_arr[0]);
-            writeUserData(temp_arr,bookmarks);
         }
         else{
             console.log($(this).css("color"));
             delete bookmarks[$(this).children('.property-addon').text().split(",")[0]];
             console.log(bookmarks);
-            $(this).css("color", "rgb(0, 0, 0)");  
-            writeUserData($(this).children('.property-addon').text().split(",")[0]);    
+            $(this).css("color", "rgb(0, 0, 0)");      
         }
         setcookie(bookmarks);
         console.log("cookie",document.cookie);
     });
 
 });
-
-
 
 $('.filter').width($('.result-content').width()-1);
 
@@ -358,4 +298,13 @@ window.onclick = function(event) {
     }
 } 
 
+function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(28.4595, 77.0266),
+        zoom: 12,
+        mapTypeId: 'roadmap'
+        };
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+} 
 
